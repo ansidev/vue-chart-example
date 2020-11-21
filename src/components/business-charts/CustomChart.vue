@@ -35,6 +35,8 @@ export default {
   data () {
     return {
       length: 35,
+      leftYAxisMinValue: 2000,
+      rightYAxisMinValue: 0.0,
       leftYAxisMaxValue: 3500,
       rightYAxisMaxValue: 6.0,
       selectedValues: [1, 2, 3],
@@ -138,21 +140,23 @@ export default {
     onWheelUp (e) {
       if (this.isCtrlPressed) {
         console.log('ctrl-wheel-up')
-        this.rightYAxisMaxValue += this.rightStep
+        const v1 = this.rightYAxisMaxValue + this.rightStep
+        this.rightYAxisMaxValue = v1 < this.rightYAxisMinValue ? this.rightYAxisMinValue : v1
       } else {
         console.log('wheel-up')
-        this.leftYAxisMaxValue += this.leftStep
+        const v1 = this.leftYAxisMaxValue + this.leftStep
+        this.leftYAxisMaxValue = v1 < this.leftYAxisMinValue ? this.leftYAxisMinValue : v1
       }
     },
     onWheelDown (e) {
       if (this.isCtrlPressed) {
         console.log('ctrl-wheel-down')
         const v1 = this.rightYAxisMaxValue - this.rightStep
-        this.rightYAxisMaxValue = v1 < 0 ? 0 : v1
+        this.rightYAxisMaxValue = v1 < this.rightYAxisMinValue ? this.rightYAxisMinValue : v1
       } else {
         console.log('wheel-down')
         const v1 = this.leftYAxisMaxValue - this.leftStep
-        this.leftYAxisMaxValue = v1 < 0 ? 0 : v1
+        this.leftYAxisMaxValue = v1 < this.leftYAxisMinValue ? this.leftYAxisMinValue : v1
       }
     }
   }
