@@ -1,12 +1,14 @@
 <template>
-  <canvas ref="myChart" :width="width" :height="height"></canvas>
+  <canvas ref="lineChart" :width="width" :height="height"></canvas>
 </template>
 
 <script>
 import Chart from 'chart.js'
+import wheel from '@/mixins/wheel'
 
 export default {
   name: 'line-chart',
+  mixins: [wheel],
   props: {
     // The canvas's width.
     width: {
@@ -43,10 +45,16 @@ export default {
       // instance to re-render the chart.
       this.chart.data.datasets = newDatasets
       this.chart.update()
+    },
+    options (newOptions) {
+      // Replace the options and call the update() method on Chart.js
+      // instance to re-render the chart.
+      this.chart.options = newOptions
+      this.chart.update()
     }
   },
   mounted () {
-    this.chart = new Chart(this.$refs.myChart, {
+    this.chart = new Chart(this.$refs.lineChart, {
       type: 'line',
       data: {
         labels: this.labels,
@@ -54,6 +62,7 @@ export default {
       },
       options: this.options
     })
+    this.addWheelEvent('lineChart')
   },
   beforeDestroy () {
     // Don't forget to destroy the Chart.js instance.
