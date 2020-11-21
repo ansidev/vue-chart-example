@@ -128,23 +128,12 @@ export default {
     }
   },
   mounted () {
-    document.addEventListener('keydown', this.onKeyDown)
-    document.addEventListener('keyup', this.onKeyUp)
+    document.addEventListener('keydown', this.onKeyEvent)
+    document.addEventListener('keyup', this.onKeyEvent)
   },
   methods: {
-    onKeyDown (e) {
+    onKeyEvent (e) {
       this.isCtrlPressed = e.ctrlKey
-      const self = this
-      this.$nextTick(() => {
-        console.log(self.isCtrlPressed)
-      })
-    },
-    onKeyUp (e) {
-      this.isCtrlPressed = e.ctrlKey
-      const self = this
-      this.$nextTick(() => {
-        console.log(self.isCtrlPressed)
-      })
     },
     onWheelUp (e) {
       if (this.isCtrlPressed) {
