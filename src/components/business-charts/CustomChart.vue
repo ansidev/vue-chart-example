@@ -36,8 +36,8 @@ export default {
     return {
       length: 35,
       leftYAxisMinValue: 2000,
-      rightYAxisMinValue: 0.0,
       leftYAxisMaxValue: 3500,
+      rightYAxisMinValue: 0.0,
       rightYAxisMaxValue: 6.0,
       selectedValues: [1, 2, 3],
       isCtrlPressed: false,
@@ -66,6 +66,7 @@ export default {
         lineTension: 0
       }, {
         type: 'bar',
+        yAxisID: 'bar-y-axis',
         label: 'C',
         backgroundColor: 'blue',
         data: random.array(this.length, 0, 500),
@@ -86,6 +87,16 @@ export default {
             }
           }],
           yAxes: [{
+            id: 'bar-y-axis',
+            type: 'linear',
+            position: 'left',
+            ticks: {
+              beginAtZero: true,
+              display: false,
+              // callback: value => numeral(value).format('$0,0'),
+              max: 3500
+            }
+          }, {
             id: 'left-y-axis',
             type: 'linear',
             position: 'left',
@@ -139,22 +150,18 @@ export default {
     },
     onWheelUp (e) {
       if (this.isCtrlPressed) {
-        console.log('ctrl-wheel-up')
         const v1 = this.rightYAxisMaxValue + this.rightStep
         this.rightYAxisMaxValue = v1 < this.rightYAxisMinValue ? this.rightYAxisMinValue : v1
       } else {
-        console.log('wheel-up')
         const v1 = this.leftYAxisMaxValue + this.leftStep
         this.leftYAxisMaxValue = v1 < this.leftYAxisMinValue ? this.leftYAxisMinValue : v1
       }
     },
     onWheelDown (e) {
       if (this.isCtrlPressed) {
-        console.log('ctrl-wheel-down')
         const v1 = this.rightYAxisMaxValue - this.rightStep
         this.rightYAxisMaxValue = v1 < this.rightYAxisMinValue ? this.rightYAxisMinValue : v1
       } else {
-        console.log('wheel-down')
         const v1 = this.leftYAxisMaxValue - this.leftStep
         this.leftYAxisMaxValue = v1 < this.leftYAxisMinValue ? this.leftYAxisMinValue : v1
       }
